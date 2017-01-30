@@ -53,6 +53,20 @@ router.get('/', function(req, res, next) {
         )
 });
 
+router.get('/abstract', function(req, res, next) {
+    Kifu.find()
+        .select('dt ev pb pw')
+        .sort('dt')
+        .exec()
+        .then(function(kifus) {
+                res.json(kifus);
+            },
+            function(err) {
+                res.status(500).end();
+            }
+        )
+});
+
 router.get('/delete', function(req, res, next) {
     Kifu.remove({})
         .exec()
