@@ -55,7 +55,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/abstract', function(req, res, next) {
     Kifu.find()
-        .select('dt ev pb pw')
+        .select('dt ev gn pb pw')
         .sort('dt')
         .exec()
         .then(function(kifus) {
