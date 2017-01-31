@@ -114,5 +114,19 @@ router.get('/delete', function(req, res, next) {
         )
 });
 
+router.delete('/:id', function(req, res, next) {
+    var id = req.params.id;
+    Kifu.remove({ _id: id })
+        .exec()
+        .then(function(data) {
+                res.json(data);
+            },
+            function(err) {
+                res.status(500).end();
+            }
+        )
+});
+
+
 
 module.exports = router;
