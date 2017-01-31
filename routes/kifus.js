@@ -10,10 +10,11 @@ router.post('/classic', function(req, res) {
     var str = req.body.sgf;
     str = str.replace(/\r\n/g, '');
     var sgf = sgf_parser.parseFromSgf(str);
-    console.log(sgf);
     var kifu = new Kifu();
-    kifu.gn = sgf.info.GN;
-    kifu.ev = sgf.info.EV;
+    kifu.name = sgf.info.EV;
+    if (!(kifu.name)) {
+        kifu.name = sgf.info.GN;
+    }
     var dt = sgf.info.DT;
     if (dt.indexOf(',') != -1) {
         dt = dt.split(',')[0];

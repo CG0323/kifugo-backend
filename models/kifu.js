@@ -5,8 +5,7 @@ mongoose.Promise = require('q').Promise;
 
 var schema = new mongoose.Schema({
     catogary: String,
-    ev: String,
-    gn: String,
+    name: String,
     pb: String,
     br: String,
     pw: String,
