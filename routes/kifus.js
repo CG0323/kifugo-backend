@@ -61,7 +61,7 @@ router.post('/search', function(req, res, next) {
     var player = param.player;
     var query = Kifu.find();
     if (player) {
-        query = kifu.find({ $or: [{ pb: { $regex: player } }, { pw: { $regex: player } }] });
+        query = Kifu.find({ $or: [{ pb: { $regex: player } }, { pw: { $regex: player } }] });
     }
     query.sort('dt')
         .skip(first)
