@@ -58,6 +58,7 @@ router.get('/abstract', function(req, res, next) {
     Kifu.find()
         .select('dt name pb pw')
         .sort('dt')
+        .limit(30)
         .exec()
         .then(function(kifus) {
                 res.json(kifus);
