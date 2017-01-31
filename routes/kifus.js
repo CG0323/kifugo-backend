@@ -59,20 +59,30 @@ router.post('/search', function(req, res, next) {
     var first = param.first;
     var rows = param.rows;
     var player = param.player;
-    var query = Kifu.find();
+    var conditions = {};
     if (player) {
-        query = Kifu.find({ $or: [{ pb: { $regex: player } }, { pw: { $regex: player } }] });
+        conditions = { $or: [{ pb: { $regex: player } }, { pw: { $regex: player } }] };
     }
-    query.sort('dt')
+    Kifu.find(conditions)
+        .sort('dt')
         .skip(first)
         .limit(rows)
         .select('dt name pb pw')
         .exec()
         .then(function(kifus) {
-                res.json(kifus);
+                Kifu.count(conditions, function(err, c) {
+                    if (err) {
+                        logger.error(err);
+                        res.status(500).send("获取棋谱总数失败");
+                    }
+                    res.status(200).json({
+                        totalCount: c,
+                        kifus: kifus
+                    })
+                });
             },
             function(err) {
-                res.status(500).end();
+                res.status(500).send("搜索棋谱失败");
             }
         )
 });
