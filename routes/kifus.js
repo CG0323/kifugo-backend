@@ -54,6 +54,29 @@ router.get('/', function(req, res, next) {
         )
 });
 
+router.post('/search', function(req, res, next) {
+    var param = req.body;
+    var first = param.first;
+    var rows = param.rows;
+    var player = param.player;
+    var query = Kifu.find();
+    if (player) {
+        query = kifu.find({ $or: [{ pb: { $regex: player } }, { pw: { $regex: player } }] });
+    }
+    query.sort('dt')
+        .skip(first)
+        .limit(rows)
+        .select('dt name pb pw')
+        .exec()
+        .then(function(kifus) {
+                res.json(kifus);
+            },
+            function(err) {
+                res.status(500).end();
+            }
+        )
+});
+
 router.get('/abstract', function(req, res, next) {
     Kifu.find()
         .select('dt name pb pw')
