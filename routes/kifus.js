@@ -67,7 +67,7 @@ router.post('/search', function(req, res, next) {
         .sort('dt')
         .skip(first)
         .limit(rows)
-        .select('dt name pb pw')
+        .select('dt name pb pw sgf')
         .exec()
         .then(function(kifus) {
                 Kifu.count(conditions, function(err, c) {
@@ -83,21 +83,6 @@ router.post('/search', function(req, res, next) {
             },
             function(err) {
                 res.status(500).send("搜索棋谱失败");
-            }
-        )
-});
-
-router.get('/abstract', function(req, res, next) {
-    Kifu.find()
-        .select('dt name pb pw')
-        .sort('dt')
-        .limit(30)
-        .exec()
-        .then(function(kifus) {
-                res.json(kifus);
-            },
-            function(err) {
-                res.status(500).end();
             }
         )
 });
