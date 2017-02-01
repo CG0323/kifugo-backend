@@ -64,7 +64,7 @@ router.post('/search', function(req, res, next) {
         conditions = { $or: [{ pb: { $regex: player } }, { pw: { $regex: player } }] };
     }
     Kifu.find(conditions)
-        .sort('dt')
+        .sort({ dt: -1 })
         .skip(first)
         .limit(rows)
         .select('dt name pb pw sgf')
