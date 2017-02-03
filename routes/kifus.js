@@ -67,7 +67,7 @@ router.post('/search', function(req, res, next) {
         .sort({ dt: -1 })
         .skip(first)
         .limit(rows)
-        .select('dt name pb pw re km')
+        .select('dt name pb pw re km sgf')
         .exec()
         .then(function(kifus) {
                 Kifu.count(conditions, function(err, c) {
