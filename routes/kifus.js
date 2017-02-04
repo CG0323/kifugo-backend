@@ -67,7 +67,7 @@ router.post('/search', function(req, res, next) {
         .sort({ dt: -1 })
         .skip(first)
         .limit(rows)
-        .select('dt name pb pw re km sgf')
+        .select('dt name pb pw re km')
         .exec()
         .then(function(kifus) {
                 Kifu.count(conditions, function(err, c) {
@@ -87,11 +87,25 @@ router.post('/search', function(req, res, next) {
         )
 });
 
+
 router.get('/delete', function(req, res, next) {
     Kifu.remove({})
         .exec()
         .then(function(data) {
                 res.json(data);
+            },
+            function(err) {
+                res.status(500).end();
+            }
+        )
+});
+
+router.get('/:id', function(req, res, next) {
+    var id = req.params.id;
+    Kifu.find({ _id: id })
+        .exec()
+        .then(function(kifus) {
+                res.json(kifus);
             },
             function(err) {
                 res.status(500).end();
