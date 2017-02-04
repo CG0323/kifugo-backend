@@ -105,7 +105,7 @@ router.get('/:id', function(req, res, next) {
     Kifu.find({ _id: id })
         .exec()
         .then(function(kifus) {
-                res.json(kifus);
+                res.json(kifus[0]);
             },
             function(err) {
                 res.status(500).end();
